@@ -1,0 +1,208 @@
+//CSE240 Homework
+// Miranda Coston
+//Completion time: 10 hours
+// @author mcoston, Acuna
+// @version 1.22
+// State the IDE that you use: Visual Studio
+
+#include <stdio.h>
+#include <string.h>
+
+#pragma warning(disable : 4996)  // compiler directive for Visual Studio only
+
+// Global Macro Values. They are used to define the size of 2D array of characters
+#define NUM_STRINGS 4
+#define STRING_LENGTH 50
+
+// Forward Declarations
+void initializeStrings(char[NUM_STRINGS][STRING_LENGTH]);
+void printStrings(char[NUM_STRINGS][STRING_LENGTH]);
+void encryptStrings(char[NUM_STRINGS][STRING_LENGTH], int);
+void decryptStrings(char[NUM_STRINGS][STRING_LENGTH], int);
+void reverseStrings(char strings[NUM_STRINGS][STRING_LENGTH]);
+char* reverseOneString(char s[STRING_LENGTH]);
+int isPalindrome(char s[STRING_LENGTH]);
+
+// Problem 1: initializeStrings (5 points)
+void initializeStrings(char strings[NUM_STRINGS][STRING_LENGTH])
+{
+	char* p = &strings[0][0];
+	// enter code here
+	for (int i = 0; i < NUM_STRINGS; i++) 
+	{
+		for (int j = 0; j < STRING_LENGTH; j++)
+		{
+			*p = '\0';
+			p++;
+		}
+	}
+}
+
+// Problem 2: printStrings (5 points)
+void printStrings(char strings[NUM_STRINGS][STRING_LENGTH])
+{
+	char* p = &strings[0][0];
+	// enter code here
+	while (p < &strings[0][0] + NUM_STRINGS * STRING_LENGTH)
+	{
+		printf("%s\n", p);
+		p = p + STRING_LENGTH;
+	}
+}
+
+// Problem 3: reverseOneString (15 points)
+char* reverseOneString(char s[STRING_LENGTH])
+{
+	char temp;					// not necessary to use this variable
+	char* p = &s[0];			// pointer to start of string
+	// enter code here
+	char* q = p + strlen(s) - 1; //set q to end of string
+	while (q > p)
+	{
+		temp = *q; //pull out butt char
+		*q = *p;   //put front-pointed char into butt-pointed char
+		*p = temp; //move butt char into the front
+		p++;	   //move front pointer inward >>
+		q--;	   //move butt pointer inward <<
+	}
+	return p;
+}
+
+// Problem 4: reverseStrings (5 points)
+// Reverse all the strings in 'strings[][]'
+// For each string in 'strings', use the reverseOneString() to reverse it.
+// You may declare and use more pointers if needed.
+void reverseStrings(char strings[NUM_STRINGS][STRING_LENGTH])
+{
+	char* p = &strings[0][0];
+	while (p < &strings[0][0] + NUM_STRINGS * STRING_LENGTH)
+	{
+		reverseOneString(p);
+		p = p + STRING_LENGTH;
+	}
+}
+
+
+// Problem 5: encryptStrings (5 points)
+// Use pointer ptr to traverse the 2D character array 'strings' and encrypt each string in 2 step as follows- 
+// 1) Reverse the strings. Hint: Use 'reverseStrings()' for this step.
+// 2) Shift the characters forward by the integer value of 'key'.
+// If the string is "hello" and key = 2, reversing will get you "olleh" and adding key to it will result in "qnngj".
+// Once the value of 'key' gets larger, you will extend past alphabetical characters and reach non-alphabetical characters. Thats ok.
+// NOTE: DO NOT encrypt the null terminator character. Use the null terminator to find the end string.
+//		If you could not implement reverseStrings(), skip using it in this function. You will receive partial credit.
+void encryptStrings(char strings[NUM_STRINGS][STRING_LENGTH], int key)
+{
+	char* p = &strings[0][0];
+	// enter code here
+	reverseStrings(p); // reverse the strings, leaves pointer at beg of last string
+	while (p < &strings[0][0] + NUM_STRINGS * STRING_LENGTH) //while we are inside the allocated memory
+	{
+		while (*p != '\0')									//while we are not a null value
+		{
+			*p += key; //encrypt/increment ASCII value of char
+			p++;		   //increment pointer to next char
+		}
+		p++;
+	}
+}
+
+
+// Problem 6: decryptStrings (5 points)
+// HINT: This should be very similiar to the encryption function defined above in encryptStrings().
+// Use pointer p to traverse the 2D character array 'strings' and decrypt each string in 2 step as follows- 
+// 1) Shift the characters backward by the integer value of 'key'.
+// 2) Reverse the strings. Hint: Use 'reverseStrings()' for this step.
+// NOTE: DO NOT decrypt the null characters.
+//		If you could not implement reverseStrings(), skip using it in this function. You will receive partial credit.
+void decryptStrings(char strings[NUM_STRINGS][STRING_LENGTH], int key)
+{
+	char* p = &strings[0][0];
+	// enter code here
+	while (p < &strings[0][0] + NUM_STRINGS * STRING_LENGTH) //while we are inside the allocated memory
+	{
+		while (*p != '\0')									//while we are not a null value
+		{
+			*p -= key; //decrypt/deccrement ASCII value of char
+			p++;		   //increment pointer to next char
+		}
+		p++;
+	}
+	p = &strings[0][0];
+	reverseStrings(p); // reverse the strings
+}
+
+// Problem 7: isPalindrome (10 points)
+// Return 1 if string s is palindrome.
+// Parse through the string to check if 1st char==last char, 2nd char == (last-1) char, and so on..
+// Return 1 if string is palindrome. Return 0 if string is not palindrome.
+// A palindrome is a sequence of characters which when reversed, is the same sequence of characters.
+// Palindrome string examples: rotor, noon, madam
+// Note: you may use reverseOneString() here but it is not necessary to use it. 
+int isPalindrome(char s[STRING_LENGTH])
+{
+	char* p = s;
+	char* q = p + strlen(s) - 1; //set q to end of string
+	int palindrome = 1;
+	while (q > p)
+	{
+		if (*p != *q) // if char != match --> no palindrome
+		{
+			palindrome = 0;
+			break; // early out of loop if char != match
+		}
+		p++;
+		q--;
+	}
+	return palindrome;
+}
+
+// You should study and understand how main() works.
+// *** DO NOT modify it in any way ***
+int main()
+{
+	char strings[NUM_STRINGS][STRING_LENGTH]; // will store four strings each with a max length of 34
+	int i, key;
+	char input[STRING_LENGTH];
+
+	printf("CSE240 HW4: Pointers\n\n");
+	initializeStrings(strings);
+
+	for (i = 0; i < NUM_STRINGS; i++)
+	{
+		printf("Enter a string: ");				// prompt for string
+		fgets(input, sizeof(input), stdin);		// store input string
+		input[strlen(input) - 1] = '\0';		// convert trailing '\n' char to '\0' (null terminator)
+		strcpy(strings[i], input);				// copy input to 2D strings array
+	}
+
+	printf("\nEnter a key value for encryption: "); // prompt for integer key
+	scanf("%d", &key);
+
+	//test for reversal
+	//reverseStrings(strings);
+	printf("\nReversed Dudes: \n");
+	printStrings(strings);
+	//end test for reversal
+
+	encryptStrings(strings, key);
+	printf("\nEncrypted Strings:\n");
+	printStrings(strings);
+	decryptStrings(strings, key);
+	printf("\nDecrypted Strings:\n");
+	printStrings(strings);
+
+	getchar();									// flush out newline '\n' char
+
+	printf("\nChecking for palindrome. Enter a string: ");				// prompt for string
+	fgets(input, sizeof(input), stdin);		// store input string
+	input[strlen(input) - 1] = '\0';		// convert trailing '\n' char to '\0' (null terminator)
+
+	if (isPalindrome(input))
+		printf("The string is a palindrome");
+	else
+		printf("The string is not a palindrome");
+
+	getchar();									// keep VS console open
+	return 0;
+}
