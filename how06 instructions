@@ -1,0 +1,141 @@
+// CSE240 
+// Be sure to add the standard header above.
+// Write the compiler used: Visual studio or g++ (SELECT ONE AND INDICATE)
+// READ BEFORE YOU START:
+// You are given a partially completed program which consist of a class 'Patient' 
+//defined in patient.h
+// The definitions of class member functions are to be filled in patient.cpp
+// hw06q1.c (this file) creates an array of objects 's[]' and uses a menu driven 
+//program to add a patient, display patient info, 
+// sort the patient list and to find the oldest patient(by age).
+// You should start completing the program from from Q1. Question numbers are given
+//around line 33.
+// To begin, you should trace through the given code and understand how it works.
+// Please read the instructions above each required function and follow the 
+//directions carefully.
+// If you modify any of the given code, the return types, or the parameters, you 
+//risk getting compile error.
+// You are not allowed to modify main ().
+// ***** WRITE COMMENTS FOR IMPORANT STEPS OF YOUR CODE. *****
+// ***** GIVE MEANINGFUL NAMES TO VARIABLES. *****
+
+/////////////////////////////patient.cpp
+/ Q1 Patient (2 points)
+// Patient() constructor assigns the following default values to class data members
+// name: abc
+// age: 19
+// DOByear: 2000
+// ID: 0
+Patient::Patient()
+{
+    
+}
+// Q2 (18 points)
+// 2 points for each function
+// Define all the class member functions.
+// While defining member functions, note that these functions will be called using 
+// a 'Patient' object which will represent one patient.
+// Eg-  Patient p[10]; creates 10 Patient objects
+// p[2].setAge(19); will set 3rd patient's age to 19
+// setName assigns 'name_input' to class data member 'name'
+void Patient::setName(string name_input)
+{
+   
+}
+// setAge assigns age_input to class data member 'age'
+void Patient::setAge(int age_input)
+{
+    
+}
+// setDOByear assigns 'DOByear_input' to class data member 'DOByear'
+void Patient::setDOByear(int DOByear_input)
+{
+        
+}
+// setID assigns 'ID_input' to class data member 'ID'
+void Patient::setID(int ID_input)
+{
+}
+// displayPatients displays the name, age, year of birth and ID of the paatient
+// See expected output in question file.
+void Patient::displayPatient()
+{
+}
+// getName returns the class data member 'name'.
+string Patient::getName()
+{
+// enter code here
+return name;
+}
+// getAge returns the class data member 'age'.
+int Patient::getAge()
+{
+// enter code here
+}
+// getDOByear returns the class data member 'DOByear'.
+int Patient::getDOByear()
+{
+// enter code here
+}
+// getID returns the class data member 'ID'.
+int Patient::getID()
+{
+    // enter code here
+}
+
+//////////////////////hw06q1.cpp
+// Q3 addPatient (10 points)
+// This function adds a new patient with the details given in function arguments.
+// Add the patient in 's' (array of objects) only if there is remaining capacity in
+//the array and if the patient does not already exist in the list
+// This function returns 1 if the patient is added successfully, else it returns 0 
+//for the cases mentioned above.
+// Assume user enters age in 0.0 - any positive integer range.
+int addPatient(string name_input, int age_input, int DOByear_input, int ID_input)
+{
+return 1; // edit this line if needed
+}
+// Q4 displayPatients (5 points)
+// This function displays the list of patients.
+// Parse the object array 's' and display the details of all patients in the array.
+//See expected output given in question file.
+// You can call the class function 'displayPatients()' here. Note that these are 
+//two different functions.
+// Patient::displayPatient() displays details of one Patient object, while 
+displayPatients() should display all patients
+void displayPatients()
+{
+}
+// Q5 sort (10 points)
+// This function sorts the patiens in descending order of age within a given range.
+// You may use the 'temp' object for sorting logic, if needed.
+//
+//
+// **** this one had unclear instructions in the whole ass assignment. 
+//they want you to call the sort function that ASKS the user for an upper bound and a lower bound
+//then you sort your list
+//THEN you display all the patients of ages within or = those bounds. 
+void sort()
+{
+Patient temp;
+// enter code here
+}
+// Q6 oldestPatient (5 points)
+// This functions displays patients who is oldest and whose name starts with a 
+//specific letter
+// Parse the array to check if the patient is the oldest patient based of the 
+//character input
+// If the patient is the oldest patient year then copy that patient's details 
+//(object's data members) 
+// to 'newPatient' object created using 'new' and display those patient details 
+//using 'newPatient' object.
+// Finally delete the 'newPatient' object.
+// NOTE: You necessarily have to use the 'newPatient' object to store the patient 
+//details in it and delete it after displaying.
+//       You should not display patient details using 's[]' object.
+void oldestPatient()
+{
+char startingCharacter; // Ask the user for a character
+Patient* newPatient = new Patient;
+// enter code here
+}
